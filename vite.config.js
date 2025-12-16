@@ -8,7 +8,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: "https://code-book-backend-igun.onrender.com/",
+        target: "https://code-book-backend-igun.onrender.com",
         changeOrigin: true,
         secure: false
       }

@@ -4,7 +4,7 @@ const getBaseURL = () => {
     if (import.meta.env.DEV){
         return "/api";
     }
-    return import.meta.env.VITE_BASE_API_URL || "https://code-book-backend-igun.onrender.com/"
+    return import.meta.env.VITE_BASE_API_URL || "https://code-book-backend-igun.onrender.com"
 }
 
 const api = (path) => {
