@@ -1,5 +1,5 @@
 import { IoClose } from "react-icons/io5"
-import { useFilter } from "../../../context"
+import { useFilter } from "../../../Context"
 
 
 
