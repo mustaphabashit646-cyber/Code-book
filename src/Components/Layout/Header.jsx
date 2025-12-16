@@ -7,12 +7,25 @@ import { DropdownLoggedOut, DropdownLoggedIn } from "../index";
 import { FaGear } from "react-icons/fa6";
 import { FaCartArrowDown } from "react-icons/fa";
 import { CgProfile } from "react-icons/cg";
+import { useCart } from "../../Context";
+import { checkLoggingStatus } from "../../Services";
+
 
 export const Header = () => {
   const [darkMode, setDarkMode] = useState(JSON.parse(localStorage.getItem("darkMode")) || false);
   const [searchSection, setSearchSection] = useState(false);
   const [dropdown, setDropdown] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
+  const {cartList} = useCart()
+
+  useEffect(() => {
+    const verifyLogin = async () => {
+      const status = await checkLoggingStatus()
+      setLoggedIn(status)
+    }
+
+    verifyLogin()
+  })
   
 
   useEffect(() => {
@@ -25,7 +38,7 @@ export const Header = () => {
     }
   }, [darkMode]);
 
-  const cartList = 0
+
 
 
   return (

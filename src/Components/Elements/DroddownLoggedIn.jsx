@@ -1,9 +1,46 @@
-import React, {  useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, {  useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useCart } from '../../Context';
+import { getUser, logout } from '../../Services';
+import { toast } from 'react-toastify';
 
 
 export const DropdownLoggedIn = ({ setDropdown }) => {
   const [user, setUser] = useState({});
+  const navigate = useNavigate()
+  const {clearCartLocal} = useCart()
+
+    const handleLogout = async () => {
+        
+        try {
+            await logout()
+        } catch (error) {
+            toast.error(error.message || "logout failed")
+        } finally {
+            clearCartLocal();
+            setDropdown(false)
+            navigate("/")
+        }
+  }
+
+  useEffect(() => {
+    const fetchUser = async () => {
+        try {
+            const profile = await getUser()
+            if(profile?.email){
+                setUser(profile)
+            } else {
+                await handleLogout()
+            }
+        } catch (error) {
+            toast.error(error.message, {closeButton: true, position: "bottom-center"})
+        }
+    }
+
+    fetchUser()
+  }, [])//eslint-disable-line react-hooks/exhausitive-deps
+
+
 
 
   return (

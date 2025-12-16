@@ -1,13 +1,30 @@
-
-import React, { useState } from 'react';
-import { IoMdEye, IoMdEyeOff } from 'react-icons/io';
-import { Link } from 'react-router-dom';
+import React from 'react';
 import { useTitle } from '../Hooks/useTitle';
-
+import { Link, useNavigate } from 'react-router-dom';
+import { register } from '../Services';
+import { toast } from 'react-toastify';
 
 export const Register = () => {
-     useTitle("Register");
-    const [showPassword, setShowPasswoed] = useState(false)
+    useTitle("Register");
+    const navigate = useNavigate();
+
+    const handleRegister = async (event) => {
+        event.preventDefault();
+
+        try {
+            const authDetail = {
+                name: event.target.name.value,
+                email: event.target.email.value,
+                password: event.target.password.value
+            };
+            await register(authDetail);
+
+            navigate("/products");  
+
+        } catch (error) {
+            toast.error(error.message, { closeButton: true, position: "bottom-center" });
+        }
+    };
 
     return (
         <main className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center py-12 px-4">
@@ -37,7 +54,7 @@ export const Register = () => {
                         </p>
                     </div>
 
-                    <form className="space-y-6">
+                    <form onSubmit={handleRegister} className="space-y-6">
                         <div>
                             <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                                 Full name
@@ -70,26 +87,13 @@ export const Register = () => {
                             <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                                 Password
                             </label>
-                            <div className='relative'>
-                                <input
-                                type={showPassword ? "text" : "password"}
+                            <input
+                                type="password"
                                 id="password"
                                 className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
                                 required
-                                placeholder='........'
                                 minLength="7"
                             />
-
-                            <button
-                            type='button'
-                            onClick={() => setShowPasswoed((prev) => !prev)}
-                            className='absolute inset-y-0 right-3 flex items-center text-gray-500 cursor-pointer dark:text-gray-300'
-                            >
-                                {showPassword ? <IoMdEyeOff /> : <IoMdEye />}
-
-                            </button>
-
-                            </div>
                             <p className="mt-2 text-xs text-gray-500 dark:text-gray-400">
                                 Use 7 or more characters with a mix of letters, numbers & symbols.
                             </p>
@@ -97,7 +101,7 @@ export const Register = () => {
 
                         <button
                             type="submit"
-                            className="w-full text-white cursor-pointer bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-3 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 transition-colors"
+                            className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-3 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 transition-colors"
                         >
                             Register
                         </button>

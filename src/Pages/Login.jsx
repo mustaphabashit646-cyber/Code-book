@@ -1,13 +1,45 @@
-import React, { useRef, useState } from 'react'
-import { IoMdEye, IoMdEyeOff } from 'react-icons/io'
-import { Link } from 'react-router-dom'
+import React, { useRef } from 'react'
 import { useTitle } from '../Hooks/useTitle'
+import { Link, useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
+import { login } from '../Services'
+import { useCart } from '../Context'
 
 export const Login = () => {
+
     useTitle("Login")
+    const navigate = useNavigate();
     const email = useRef()
     const password = useRef()
-    const [showPassword, setShowPasswoed] = useState(false)
+    const {loadCart} = useCart()
+
+    const handleLogin = async(event) => {
+        event.preventDefault()
+        try {
+            const authDetail = {
+                email: email.current.value,
+                password: password.current.value
+            }
+
+            const data = await login(authDetail)
+             
+              await loadCart()
+            
+              if(data.isAdmin){
+                navigate("/admin")
+              }else {
+                navigate("/products")
+              }
+        } catch (error) {
+            toast.error(error.message, {closeButton: true, position: "bottom-center"})
+        }
+    }
+
+    const handleLoginGuest = () => {
+        setTimeout(() => {
+            navigate("/products")
+        }, 1000)
+    }
 
   return (
     <main className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center py-12 px-4">
@@ -31,14 +63,14 @@ export const Login = () => {
             </h2>
             <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">
               Enter your credentials or{" "}
-              <span className="text-blue-700 dark:text-blue-500 cursor-pointer font-medium">
+              <span onClick={handleLoginGuest} className="text-blue-700 dark:text-blue-500 cursor-pointer font-medium">
                 continue as guest
               </span>
               .
             </p>
           </div>
 
-          <form className="space-y-6">
+          <form onSubmit={handleLogin} className="space-y-6">
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                 Email address
@@ -58,30 +90,18 @@ export const Login = () => {
               <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                 Password
               </label>
-             <div className='relative'>
-                 <input
+              <input
                 ref={password}
-                type={showPassword ? "text" : "password"}
+                type="password"
                 id="password"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 required
-                placeholder='........'
               />
-
-              <button
-                type='button'
-                onClick={() => setShowPasswoed((prev) => !prev)}
-                className='absolute inset-y-0 right-3 flex items-center text-gray-500 cursor-pointer dark:text-gray-300'
-              >
-                {showPassword ? <IoMdEyeOff /> : <IoMdEye />}
-              
-                </button>
-             </div>
             </div>
 
             <button
               type="submit"
-              className="w-full text-white cursor-pointer bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-3 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 transition-colors"
+              className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-3 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 transition-colors"
             >
               Log In
             </button>
@@ -95,8 +115,9 @@ export const Login = () => {
           </div>
 
           <button
+            onClick={handleLoginGuest}
             type="button"
-            className="mt-6 w-full cursor-pointer text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-3 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 transition-colors"
+            className="mt-6 w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-3 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 transition-colors"
           >
             Login As Guest
           </button>

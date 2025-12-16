@@ -5,7 +5,7 @@ import { useTitle } from "../../Hooks/useTitle";
 import { ProductCard } from "../../Components/Elements/ProductCard";
 import { FilterBar } from "./Components/FilterBar";
 import { toast } from "react-toastify";
-import { useCart, useFilter } from "../../context";
+import { useCart, useFilter } from "../../Context";
 import { getProductList } from "../../Services/productServices";
 import { MdMenu } from "react-icons/md";
 

@@ -23,7 +23,7 @@ export const ProductCard = ({ product, cartList: propCartList, addToCart: propAd
         if (!cartList) {
             setInCart(false);
             return;
-        }
+    }
 
         const productInCart = cartList.find(item => item.id === product.id);
         setInCart(!!productInCart);
