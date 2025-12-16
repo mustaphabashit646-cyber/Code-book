@@ -2,7 +2,7 @@ import {  useEffect, useState } from "react";
 import { ProductCard } from "../../../Components/Elements/ProductCard";
 import { toast } from "react-toastify";
 import { getFeaturedList } from "../../../Services";
-import { useCart } from "../../../Context";
+import { useCart } from "../../../context";
 
 
 

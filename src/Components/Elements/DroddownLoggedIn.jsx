@@ -1,6 +1,6 @@
 import React, {  useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useCart } from '../../Context';
+import { useCart } from '../../context';
 import { getUser, logout } from '../../Services';
 import { toast } from 'react-toastify';
 

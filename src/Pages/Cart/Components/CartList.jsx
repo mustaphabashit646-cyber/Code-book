@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useCart } from '../../../Context'
+import { useCart } from '../../../context'
 import CartCard from './CartCard'
 import Checkout from './Checkout'
 import { BiRightArrow } from 'react-icons/bi'

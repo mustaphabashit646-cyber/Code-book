@@ -7,7 +7,7 @@ import { DropdownLoggedOut, DropdownLoggedIn } from "../index";
 import { FaGear } from "react-icons/fa6";
 import { FaCartArrowDown } from "react-icons/fa";
 import { CgProfile } from "react-icons/cg";
-import { useCart } from "../../Context";
+import { useCart } from "../../context";
 import { checkLoggingStatus } from "../../Services";
 
 

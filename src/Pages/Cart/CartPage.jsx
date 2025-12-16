@@ -1,5 +1,5 @@
 import React from 'react'
-import { useCart } from '../../Context'
+import { useCart } from '../../context'
 import { useTitle } from '../../Hooks/useTitle'
 import CartEmpty from './Components/CartEmpty'
 import CartList from './Components/CartList'

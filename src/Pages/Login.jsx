@@ -3,7 +3,7 @@ import { useTitle } from '../Hooks/useTitle'
 import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { login } from '../Services'
-import { useCart } from '../Context'
+import { useCart } from '../context'
 
 export const Login = () => {
 

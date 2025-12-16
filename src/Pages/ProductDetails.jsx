@@ -4,7 +4,7 @@ import { Navigate, useNavigate, useParams } from "react-router-dom"
 import { useTitle } from "../Hooks/useTitle"
 import { toast } from "react-toastify"
 import { Rating } from "../Components"
-import { useCart } from "../Context"
+import { useCart } from "../context"
 import { IoMdAdd, IoMdArrowRoundBack } from "react-icons/io";
 import { FaTrashAlt } from "react-icons/fa";
 import { getProduct } from "../Services"
